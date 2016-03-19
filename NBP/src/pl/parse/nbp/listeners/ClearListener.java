@@ -23,7 +23,9 @@ public class ClearListener implements ActionListener {
     	
     	dostep.getTextField("end").setText(null);
     	
-    	dostep.getTextField("show").setText(null);
+    	dostep.getTextField("value").setText(null);
+    	
+    	dostep.getTextArea().setText(null);
 		
 	}
 

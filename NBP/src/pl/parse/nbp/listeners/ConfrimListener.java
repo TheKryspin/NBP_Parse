@@ -3,6 +3,9 @@ package pl.parse.nbp.listeners;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
+
+import javax.swing.JOptionPane;
+
 import pl.parse.nbp.gui.*;
 /**
  * 
@@ -68,6 +71,9 @@ public class ConfrimListener implements ActionListener {
     	
     	int counter = start.compareTo(end);
     	
+    	JOptionPane.showMessageDialog(null, "jakis tekst");
+    	
+    	
 		}else { dostep.getTextArea().setText("\n\nZLY FORMAT - POPRAWNY TO \n"+" OD: yyyy-mm-dd"
 				+ "\n DO: yyyy-mm-dd \n WALUTA: USD, EUR, CHF, GBP"); }
     	
@@ -77,15 +83,73 @@ public class ConfrimListener implements ActionListener {
   public boolean check(int StartYear, int StartMonth, int StartDay, int EndYear, int EndMonth, int EndDay){
 	  
 	  String waluta = dostep.getTextField("value").getText();
+	
 	  
-	  if(Start.substring(4,5) != "-" || Start.substring(7,8) != "-" || StartYear < 2002 || StartYear > 2016 
-			  || StartMonth < 1 || StartMonth > 12 || (StartDay < 1 || StartDay > 31) || EndYear < StartYear 
-			  || (EndYear < StartYear && EndMonth < StartMonth && EndDay<StartDay) || EndYear > 2016 ||
-			  EndMonth > 12 || EndMonth < 0 || EndDay < 1 || EndDay > 31 || waluta != "USD" 
-			  || waluta != "EUR" || waluta !="GBP" || waluta != "CHF")
-              {return false; }
-	  else { return true; }
+	  if(waluta.equals("USD") || waluta.equals("EUR") || waluta.equals("GBP") || waluta.equals("CHF"))
+	  {
+		  
+		  if(Start.substring(4,5).equals("-") && End.substring(4,5).equals("-") && Start.substring(7,8).equals("-") && End.substring(7,8).equals("-"))
+		  {
+			  if( (StartYear > 2001) && (StartYear < 2017) && (StartMonth > 0) && StartMonth < 13 &&
+				StartDay > 0 && StartDay < 32) 
+				{
+				  if((EndYear > 2001) && (EndYear < 2017) && (EndMonth > 0) && EndMonth < 13 &&
+				EndDay > 0 && EndDay < 32)
+				  {
+					  if(StartYear > EndYear)
+					  {
+						  JOptionPane.showMessageDialog(null, "Rok poczatkowy wiekszy niz koncowy");
+						  return false;
+						
+						  }else
+						  {
+							if (StartYear == EndYear && StartMonth > EndMonth)
+							{
+								  JOptionPane.showMessageDialog(null, "Ustaw wiekszy miesiac koncowy");
+								  return false;
+								
+							}
+							else
+							{
+								if(StartYear == EndYear && StartMonth == EndMonth && StartDay > EndDay)
+								{
+									JOptionPane.showMessageDialog(null, "Ustaw wiekszy dzien koncowy");
+									return false;
+									
+									
+									
+								}else{return true;}
+							}
+						  }
+						  
+						  
+					  }else
+					  {
+						  JOptionPane.showMessageDialog(null, "Rok poczatkowy musi byc wiekszy niz koncowy");;
+						  return false;
+					  }
+					  
+				  }else
+				  {
+					  JOptionPane.showMessageDialog(null, "Blad w dacie koncowe");
+					  return false;
+				  }
+				  
+				}
+			  else
+			  {
+				  JOptionPane.showMessageDialog(null, "Blad w formacie daty poczatkowej");
+				  return false;
+			  }
+			  
+		  }
+		  else
+		  {
+			  JOptionPane.showMessageDialog(null, "ZLY FORMAT. Pamietaj o -");
+			  return false;
+		  }
+	  }
+  
 	 
   }
 
-}
