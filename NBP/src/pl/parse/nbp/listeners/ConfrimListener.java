@@ -70,8 +70,6 @@ public class ConfrimListener implements ActionListener {
     	
     	Value = dostep.getTextField("value").getText();
     	
-    	int counter = start.compareTo(end);
-    	
     	ParseAndCalc parsing = new ParseAndCalc(start, end);
     	
     	
