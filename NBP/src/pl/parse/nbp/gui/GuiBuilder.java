@@ -20,7 +20,7 @@ public class GuiBuilder {
    
     private TextField DataStart;
     private TextField DataEnd;
-    private TextField Show;
+    private TextArea Show;
     private TextField Waluta;
 
     
@@ -47,7 +47,7 @@ public class GuiBuilder {
 					
 					DataEnd = new TextField("Data");
 	
-					Show = new TextField("Wynik");
+					Show = new TextArea();
 	
 					Waluta = new TextField("Waluta");
 	}
@@ -72,7 +72,7 @@ public class GuiBuilder {
 				
 				//-------------BOTTOM----------------	
 					BottomPanel.add(Show);
-				
+					
 			  
 			//-----------------DODANIE DO RAMKI
 			  Frame.add(TopPanel);
@@ -108,7 +108,6 @@ public class GuiBuilder {
 			try{
 			if(which == "start"){return this.DataStart;}
 			else if (which =="end"){return this.DataEnd;}
-			else if (which == "show"){return this.Show;}
 			else if (which == "value"){return this.Waluta;}
 				return null;
 			}catch(Exception a){
@@ -118,4 +117,5 @@ public class GuiBuilder {
 			
 			}
 
+		public TextArea getTextArea(){return this.Show;}
 }

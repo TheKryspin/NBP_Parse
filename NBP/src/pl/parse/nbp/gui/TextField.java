@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.util.*;
 
+import javax.swing.InputVerifier;
 import javax.swing.JTextField;
 
 
@@ -36,26 +37,9 @@ private String Choice;
     		
     		this.setFont(f);
     		
+    		
     	}
-    	else if(this.Choice =="Wynik"){
-    		
-    		this.setPreferredSize(new Dimension(350,150));
-    		
-    		this.setEditable(false);
-    		
-    		this.setBorder(null);
-    		
-    		Font f = new Font("Segoe UI Light", 1, 20);
-    		
-    		this.setFont(f);
-    		
-    		this.setForeground(Color.WHITE);
-    		
-    		this.setCaretColor(Color.WHITE);
-    		
-    		this.setOpaque(false);
-    		
-    	}	else if(this.Choice =="Waluta"){
+    		else if(this.Choice =="Waluta"){
     		
     		this.setPreferredSize(new Dimension(35,35));
     		
