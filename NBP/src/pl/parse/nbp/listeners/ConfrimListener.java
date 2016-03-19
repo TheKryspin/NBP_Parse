@@ -7,6 +7,7 @@ import java.util.*;
 import javax.swing.JOptionPane;
 
 import pl.parse.nbp.gui.*;
+import pl.parse.nbp.xml.ParseAndCalc;
 /**
  * 
  */
@@ -71,9 +72,10 @@ public class ConfrimListener implements ActionListener {
     	
     	int counter = start.compareTo(end);
     	
-    	JOptionPane.showMessageDialog(null, "jakis tekst");
+    	ParseAndCalc parsing = new ParseAndCalc(start, end);
     	
     	
+  
 		}else { dostep.getTextArea().setText("\n\nZLY FORMAT - POPRAWNY TO \n"+" OD: yyyy-mm-dd"
 				+ "\n DO: yyyy-mm-dd \n WALUTA: USD, EUR, CHF, GBP"); }
     	
