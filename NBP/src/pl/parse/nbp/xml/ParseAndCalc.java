@@ -24,13 +24,22 @@ public class ParseAndCalc {
 	ArrayList<Double> kursy_licz;
 	
     public Calendar Start,End;
-
-    public ParseAndCalc(Calendar Start, Calendar End) {
     
-    	this.Start = Start;
+    String StartYearP, EndYearP, StartStart;
+
+    int StartMonth,StartDay,EndMonth,EndDay, EndYear, StartYear;
+    
+    public ParseAndCalc(int StartYear, int StartMonth, int StartDay, int EndYear, int EndMonth, int EndDay) {
+    
+    	this.StartStart =Integer.toString(StartYear);
     	
-    	this.End = End;
+    	this.StartYearP = Integer.toString(StartYear).substring(2,4);
+    	System.out.println(StartYearP);
+    	this.EndYearP = Integer.toString(EndYear).substring(2, 4);  
+    	System.out.println(EndYearP);
+    	this.StartMonth = StartMonth; this.EndMonth = EndMonth;
     	
+    	this.StartDay = StartDay; this.EndDay = EndDay;
 
 		this.XmlLinks = new ArrayList<String>();
 		
@@ -70,11 +79,8 @@ public class ParseAndCalc {
     		
     		Document doc = dBuilder.parse(connection.getInputStream());
     	
-    		System.out.println(" Root element  " + doc.getDocumentElement().getNodeName());
-    		
     		NodeList pozycje = doc.getElementsByTagName("pozycja");
     		
-    		System.out.println("ILE POZYCJI  " + pozycje.getLength());
     		
     		for (int j =0 ; j < pozycje.getLength(); j++)
     		{
@@ -176,43 +182,80 @@ public class ParseAndCalc {
 
     public void xmllinks() throws IOException 
     { 
+    	this.EndYear = Integer.parseInt(EndYearP);
     	
-    	Calendar tmp = Start;
+    	this.StartYear = Integer.parseInt(StartYearP);
+    	
+    	int tmp = Integer.parseInt(StartStart); 
 		
-		for (int i = 0; i < ((End.get(Calendar.YEAR) - Start.get(Calendar.YEAR))+1);i++){
+		for (int i = 0; i < (EndYear - StartYear +1);i++){
 			
-		URL text = new URL("http://www.nbp.pl/kursy/xml/dir"+tmp.get(Calendar.YEAR)+".txt");
-		
-		BufferedReader in = new BufferedReader(
-			    new InputStreamReader(text.openStream()));
-		
-		String TmpString= null;
-		
-		while((TmpString = in.readLine()) != null ){	
-		
-			if(End.get(Calendar.MONTH) >= Integer.parseInt(TmpString.substring(7,9))  
-					&&  End.get(Calendar.DAY_OF_MONTH) >= (Integer.parseInt(TmpString.substring(9,11)))) {
-				if( Integer.parseInt(TmpString.substring(7,9)) >= Start.get(Calendar.MONTH)
-					&& Integer.parseInt(TmpString.substring(9,11)) >= Start.get(Calendar.DAY_OF_MONTH)){
-			if(TmpString.substring(0,1).equals("c"))
-			{
-				XmlLinks.add(TmpString);
-		
-			}
+			String year = Integer.toString(tmp);
 			
-			}
+			URL text = new URL("http://www.nbp.pl/kursy/xml/dir"+year+".txt");
 		
-			}
-	}
+			BufferedReader in = new BufferedReader(
+						new InputStreamReader(text.openStream()));
+		
+			String TmpString= null;
+		
+
+			System.out.println("START : " +StartYear + " " + StartMonth + " " + StartDay);
+		
+			
+			System.out.println("END : " +EndYear + " " + EndMonth + " " + EndDay);
 			
 			
+				while(((TmpString = in.readLine()) != null)  )
+				{
+				
+				int tmpy, tmpm,tmpd;
+				
+
+				tmpy = Integer.parseInt(TmpString.substring(5,7));
+				
+				tmpm = Integer.parseInt(TmpString.substring(7,9));
+				
+				
+				tmpd = Integer.parseInt(TmpString.substring(9,11));
+				
+				
+						if( tmpm >= StartMonth &&tmpd >= StartDay)
+						{
+							System.out.println(tmpm +" > " +StartMonth);
+							
+
+							System.out.println(tmpd +" > " +StartDay);
+							
+							 if( tmpy <= EndYear && tmpm <= EndMonth	&& tmpd <= EndDay)
+							{
+
+								System.out.println(tmpy +" < " +EndYear);
+								
+
+								System.out.println(tmpm +" < " +EndMonth);
+
+
+								System.out.println(tmpd +" < " +EndDay);
+
+								
+								if(TmpString.substring(0,1).equals("c")){
+								XmlLinks.add(TmpString);
+								}
+							
+							}
+							
+						}
+				
+						
 		
-		
-		
-		
+	
 		
 		
 		}
+				
+			tmp++;	
+		}
+    }
     }
     
-}

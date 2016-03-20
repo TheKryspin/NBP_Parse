@@ -65,14 +65,14 @@ public class ConfrimListener implements ActionListener {
 
     	
 		if(this.check(StartYear, StartMonth, StartDay, EndYear, EndMonth, EndDay)){
-		    	
+		 /*   	
     	start.set(StartYear, StartMonth, StartDay);
     	
     	end.set(EndYear, EndMonth, EndDay);
-    	
+    	*/
     	Value = dostep.getTextField("value").getText();
     	
-    	ParseAndCalc parsing = new ParseAndCalc(start, end);
+    	ParseAndCalc parsing = new ParseAndCalc(StartYear, StartMonth, StartDay, EndYear, EndMonth,EndDay);
     	
     	try {
 			parsing.pobierzKurs(Value);
@@ -83,7 +83,7 @@ public class ConfrimListener implements ActionListener {
 			
 			odchylenie = parsing.liczOdchylenie(srednia);
 			
-			String results = new String("Kod waluty : "+ dostep.getTextField("value").getText() + "\nData poczatakowa : "
+			String results = new String("\n\nKod waluty : "+ dostep.getTextField("value").getText() + "\nData poczatakowa : "
 					+ dostep.getTextField("start").getText() + "\nData koncowa : " + dostep.getTextField("end").getText()+
 					"\nSredni kurs kupna: " + Double.toString(srednia) + "\nOdchylenie standardowe : " 
 					+ Double.toString(odchylenie));
