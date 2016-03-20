@@ -34,9 +34,9 @@ public class ParseAndCalc {
     	this.StartStart =Integer.toString(StartYear);
     	
     	this.StartYearP = Integer.toString(StartYear).substring(2,4);
-    	System.out.println(StartYearP);
+    	
     	this.EndYearP = Integer.toString(EndYear).substring(2, 4);  
-    	System.out.println(EndYearP);
+    	
     	this.StartMonth = StartMonth; this.EndMonth = EndMonth;
     	
     	this.StartDay = StartDay; this.EndDay = EndDay;
@@ -198,15 +198,9 @@ public class ParseAndCalc {
 						new InputStreamReader(text.openStream()));
 		
 			String TmpString= null;
-		
-
-			System.out.println("START : " +StartYear + " " + StartMonth + " " + StartDay);
-		
-			
-			System.out.println("END : " +EndYear + " " + EndMonth + " " + EndDay);
 			
 			
-				while(((TmpString = in.readLine()) != null)  )
+				while((TmpString = in.readLine()) !=  null )
 				{
 				
 				int tmpy, tmpm,tmpd;
@@ -216,32 +210,14 @@ public class ParseAndCalc {
 				
 				tmpm = Integer.parseInt(TmpString.substring(7,9));
 				
-				
 				tmpd = Integer.parseInt(TmpString.substring(9,11));
 				
-				
-						if( tmpm >= StartMonth &&tmpd >= StartDay)
+				if(TmpString.substring(0,1).equals("c")){
+					
+					 if(this.chech_cond(tmpy, tmpm, tmpd))
 						{
-							System.out.println(tmpm +" > " +StartMonth);
-							
-
-							System.out.println(tmpd +" > " +StartDay);
-							
-							 if( tmpy <= EndYear && tmpm <= EndMonth	&& tmpd <= EndDay)
-							{
-
-								System.out.println(tmpy +" < " +EndYear);
-								
-
-								System.out.println(tmpm +" < " +EndMonth);
-
-
-								System.out.println(tmpd +" < " +EndDay);
-
-								
-								if(TmpString.substring(0,1).equals("c")){
-								XmlLinks.add(TmpString);
-								}
+						 	System.out.println(tmpy + " " + tmpm + " "+ tmpd);
+										XmlLinks.add(TmpString);
 							
 							}
 							
@@ -257,5 +233,31 @@ public class ParseAndCalc {
 			tmp++;	
 		}
     }
-    }
+    
+public boolean chech_cond (int tmpy, int tmpm, int tmpd)
+{
+	boolean a,b,c,d,e,f;
+	
+	a = tmpm >= StartMonth;
+	
+	
+	e= tmpy <= EndYear;
+	
+	
+	c = tmpm <= EndMonth;
+	
+	
+	
+	
+	f=a&&c&&e;
+	
+	if(tmpy == EndYear && tmpm == EndMonth)
+		{d =  tmpd <= EndDay; return f&&d;}
+		
+		
+	else if(tmpm == StartMonth)
+		{b = tmpd >= StartDay; return f&&b;}
+	else{ return f;}
+}	
+}
     
