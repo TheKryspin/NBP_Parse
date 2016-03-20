@@ -72,6 +72,16 @@ public class ConfrimListener implements ActionListener {
     	
     	ParseAndCalc parsing = new ParseAndCalc(start, end);
     	
+    	try {
+			parsing.pobierzKurs(Value);
+			
+			parsing.wszystkieKursy();
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
     	
   
 		}else { dostep.getTextArea().setText("\n\nZLY FORMAT - POPRAWNY TO \n"+" OD: yyyy-mm-dd"
