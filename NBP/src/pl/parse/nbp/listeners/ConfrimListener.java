@@ -8,9 +8,7 @@ import javax.swing.JOptionPane;
 
 import pl.parse.nbp.gui.*;
 import pl.parse.nbp.xml.ParseAndCalc;
-/**
- * 
- */
+
 public class ConfrimListener implements ActionListener {
 
 	private Calendar start;
@@ -65,23 +63,24 @@ public class ConfrimListener implements ActionListener {
 
     	
 		if(this.check(StartYear, StartMonth, StartDay, EndYear, EndMonth, EndDay)){
-		 /*   	
+		    	
     	start.set(StartYear, StartMonth, StartDay);
     	
     	end.set(EndYear, EndMonth, EndDay);
-    	*/
+    	
+    	
     	Value = dostep.getTextField("value").getText();
     	
+    	
     	ParseAndCalc parsing = new ParseAndCalc(StartYear, StartMonth, StartDay, EndYear, EndMonth,EndDay);
+    	
     	
     	try {
 			parsing.pobierzKurs(Value);
 			
-			parsing.wszystkieKursy();
+			srednia = parsing.liczSrednia("Kupno");
 			
-			srednia = parsing.liczSrednia();
-			
-			odchylenie = parsing.liczOdchylenie(srednia);
+			odchylenie = parsing.liczOdchylenie(parsing.liczSrednia("Sprzedaz"));
 			
 			String results = new String("\n\nKod waluty : "+ dostep.getTextField("value").getText() + "\nData poczatakowa : "
 					+ dostep.getTextField("start").getText() + "\nData koncowa : " + dostep.getTextField("end").getText()+

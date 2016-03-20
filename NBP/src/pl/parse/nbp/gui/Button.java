@@ -12,7 +12,11 @@ import javax.swing.JButton;
  */
 public class Button extends JButton {
 
- private String ChoiceButton;
+ /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+private String ChoiceButton;
 
     public Button(String ChoiceButton) {
 

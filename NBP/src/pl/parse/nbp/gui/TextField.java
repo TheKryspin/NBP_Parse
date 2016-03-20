@@ -3,14 +3,18 @@ package pl.parse.nbp.gui;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.util.*;
 
-import javax.swing.InputVerifier;
+
+
 import javax.swing.JTextField;
 
 
 public class TextField extends JTextField {
 
+/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 private String Choice; 
 
     public TextField(String ChoiceTextField) {

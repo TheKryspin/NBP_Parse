@@ -1,10 +1,10 @@
 package pl.parse.nbp.gui;
 
-import java.awt.Color;
+
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.util.*;
+
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -14,6 +14,10 @@ import javax.swing.JPanel;
  */
 public class Panel extends JPanel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String Choice;
 	
     public Panel(String ChoicePanel) {

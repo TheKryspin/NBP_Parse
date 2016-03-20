@@ -8,6 +8,11 @@ import javax.swing.JTextArea;
 
 public class TextArea extends JTextArea {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4890902781954198288L;
+
 	public TextArea(){
 		
 		this.setPreferredSize(new Dimension(350,150));

@@ -2,18 +2,15 @@ package pl.parse.nbp.xml;
 
 import java.util.*;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.*;
 
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.swing.JOptionPane;
 import javax.xml.parsers.DocumentBuilder;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
+
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 
@@ -22,6 +19,8 @@ public class ParseAndCalc {
 	ArrayList<String> XmlLinks;
 
 	ArrayList<Double> kursy_licz;
+	
+	ArrayList<Double> kursy_sprzedazy_array;
 	
     public Calendar Start,End;
     
@@ -47,7 +46,6 @@ public class ParseAndCalc {
     	try {
 			this.xmllinks();
 			
-			this.showxml();
     	} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -59,6 +57,8 @@ public class ParseAndCalc {
     public void pobierzKurs(String Value) throws Exception {
     	
     	kursy_licz = new ArrayList<Double>();
+    	
+    	kursy_sprzedazy_array = new ArrayList<Double>();
     	
     	for (int i =0; i <XmlLinks.size() ; i++){
     	
@@ -89,23 +89,37 @@ public class ParseAndCalc {
     			
     			Element GetInside = (Element) temp;
     			
-    			NodeList kursy = GetInside.getElementsByTagName("kurs_kupna");
     			
-    			Element kursy_walut = (Element) kursy.item(0);
+    				NodeList kursy = GetInside.getElementsByTagName("kurs_kupna");
     			
-    			NodeList kursiki = kursy_walut.getChildNodes();
+    				Element kursy_walut = (Element) kursy.item(0);
+
+    				NodeList kursiki = kursy_walut.getChildNodes();
+    				
+    				
+    				NodeList kursy_node = GetInside.getElementsByTagName("kurs_sprzedazy");
     			
-    			NodeList lista_walut = GetInside.getElementsByTagName("kod_waluty");
+    				Element lista_sprzedaz = (Element) kursy_node.item(0);
     			
-    			Element kody = (Element) lista_walut.item(0);
+    				NodeList sprzedaz = lista_sprzedaz.getChildNodes();
+    				
     			
-    			NodeList kod =  kody.getChildNodes();
+    				NodeList lista_walut = GetInside.getElementsByTagName("kod_waluty");
     			
+    					Element kody = (Element) lista_walut.item(0);
+    			
+    					NodeList kod =  kody.getChildNodes();
+    			
+    					
     			if(kod.item(0).getNodeValue().equals(Value))
     			{
+    				String tempor_sprzedaz = sprzedaz.item(0).getNodeValue().trim().replace(",", ".");
+    				kursy_sprzedazy_array.add(Double.parseDouble(tempor_sprzedaz));
+    				
     				String tempor = kursiki.item(0).getNodeValue().trim().replace(",", ".");
     				kursy_licz.add(Double.parseDouble(tempor));
-    				System.out.println(kursiki.item(0).getNodeValue());
+    				
+    				
     			}
     		}
     	}
@@ -116,21 +130,14 @@ public class ParseAndCalc {
     
 
  
-    public void wszystkieKursy() {
-    
-    for(int i = 0 ; i < kursy_licz.size(); i++)
-    {
-    	System.out.println(Double.toString(kursy_licz.get(i)));
-    	
-    }
-    
-    }
+   
 
-    public double liczSrednia() {
+    public double liczSrednia(String choice) {
     	
     	double suma = 0;
     	double srednia;
     	
+    	if(choice == "Kupno"){
     	for(int i = 0 ; i < kursy_licz.size(); i++)
     	    {
     			suma += kursy_licz.get(i);
@@ -138,12 +145,30 @@ public class ParseAndCalc {
     	    }
     
 
-    //	System.out.println(Double.toString(suma));
-    	
     	
     	srednia = suma / kursy_licz.size();
     	
     	return srednia;
+    	}else if(choice == "Sprzedaz")
+    	{
+    		for(int i = 0 ; i < kursy_sprzedazy_array.size(); i++)
+    	    {
+    			suma += kursy_sprzedazy_array.get(i);
+    		
+    	    }
+    
+
+    	
+    	srednia = suma / kursy_sprzedazy_array.size();
+    	
+    	return srednia;
+    		
+    		
+    		
+    	}else {return 0.0;}
+    	
+    	
+    	
     }
 
     /**
@@ -153,7 +178,7 @@ public class ParseAndCalc {
     
     	double odchylenie = 0; 
     	double suma_temp = 0;
-    	double temp = 0;
+    	
     	int mianownik =kursy_licz.size() - 1;
     	
     	
@@ -170,17 +195,7 @@ public class ParseAndCalc {
     		
     	return odchylenie;
     }
-    
-    public void showxml(){
-    	
-    	for(int i = 0; i < XmlLinks.size() ; i++)
-    	{
-    		
-    		System.out.println(XmlLinks.get(i));
-    		
-    	}
-    	
-    }
+
 
     public void xmllinks() throws IOException 
     { 
@@ -218,7 +233,7 @@ public class ParseAndCalc {
 					
 					 if(this.chech_cond(tmpy, tmpm, tmpd))
 						{
-						 	System.out.println(tmpy + " " + tmpm + " "+ tmpd);
+						 	
 										XmlLinks.add(TmpString);
 							
 							}
@@ -257,7 +272,7 @@ public boolean chech_cond (int tmpy, int tmpm, int tmpd)
 		
 		{b = tmpd >= StartDay; return f&&b;}
 	
-	else if(tmpy == EndYear && tmpm == EndMonth)
+	else if( tmpm == EndMonth)
 		{d =  tmpd <= EndDay; return f&&d;}
 		
 		

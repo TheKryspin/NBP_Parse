@@ -2,7 +2,7 @@ package pl.parse.nbp.gui;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.util.*;
+
 
 import javax.swing.JFrame;
 
@@ -11,9 +11,14 @@ import javax.swing.JFrame;
  */
 public class Ramka extends JFrame {
 
-	private Dimension size;
+
 	
-    public Ramka() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public Ramka() {
     	
     	this.setSize(new Dimension(400,450));
     	
