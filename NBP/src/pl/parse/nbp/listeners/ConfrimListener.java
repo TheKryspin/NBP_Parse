@@ -27,6 +27,8 @@ public class ConfrimListener implements ActionListener {
     
     GuiBuilder dostep;
     
+    double srednia, odchylenie;
+    
     public ConfrimListener(GuiBuilder build) {
     	
     	dostep = build;
@@ -76,6 +78,17 @@ public class ConfrimListener implements ActionListener {
 			parsing.pobierzKurs(Value);
 			
 			parsing.wszystkieKursy();
+			
+			srednia = parsing.liczSrednia();
+			
+			odchylenie = parsing.liczOdchylenie(srednia);
+			
+			String results = new String("Kod waluty : "+ dostep.getTextField("value").getText() + "\nData poczatakowa : "
+					+ dostep.getTextField("start").getText() + "\nData koncowa : " + dostep.getTextField("end").getText()+
+					"\nSredni kurs kupna: " + Double.toString(srednia) + "\nOdchylenie standardowe : " 
+					+ Double.toString(odchylenie));
+			
+			dostep.getTextArea().setText(results);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

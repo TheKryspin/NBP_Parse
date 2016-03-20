@@ -21,7 +21,7 @@ public class ParseAndCalc {
 
 	ArrayList<String> XmlLinks;
 
-	ArrayList<Float> kursy;
+	ArrayList<Double> kursy_licz;
 	
     public Calendar Start,End;
 
@@ -49,7 +49,7 @@ public class ParseAndCalc {
 
     public void pobierzKurs(String Value) throws Exception {
     	
-    	kursy = new ArrayList<Float>();
+    	kursy_licz = new ArrayList<Double>();
     	
     	for (int i =0; i <XmlLinks.size() ; i++){
     	
@@ -97,6 +97,8 @@ public class ParseAndCalc {
     			
     			if(kod.item(0).getNodeValue().equals(Value))
     			{
+    				String tempor = kursiki.item(0).getNodeValue().trim().replace(",", ".");
+    				kursy_licz.add(Double.parseDouble(tempor));
     				System.out.println(kursiki.item(0).getNodeValue());
     			}
     		}
@@ -110,27 +112,55 @@ public class ParseAndCalc {
  
     public void wszystkieKursy() {
     
-    for(int i = 0 ; i < kursy.size(); i++)
+    for(int i = 0 ; i < kursy_licz.size(); i++)
     {
-    	System.out.println(Float.toString(kursy.get(i)));
+    	System.out.println(Double.toString(kursy_licz.get(i)));
     	
     }
     
     }
 
-    /**
-     * 
-     */
-    public void liczSrednia() {
-
+    public double liczSrednia() {
+    	
+    	double suma = 0;
+    	double srednia;
+    	
+    	for(int i = 0 ; i < kursy_licz.size(); i++)
+    	    {
+    			suma += kursy_licz.get(i);
+    		
+    	    }
     
+
+    //	System.out.println(Double.toString(suma));
+    	
+    	
+    	srednia = suma / kursy_licz.size();
+    	
+    	return srednia;
     }
 
     /**
      * 
      */
-    public void liczOdchylenie() {
+    public double liczOdchylenie(double srednia) {
     
+    	double odchylenie = 0; 
+    	double suma_temp = 0;
+    	double temp = 0;
+    	
+    	for(int i = 0; i < kursy_licz.size(); i++)
+    	{
+    		suma_temp += Math.pow((double)kursy_licz.get(i),srednia); 
+    		
+    		
+    	}
+    	
+    	temp = (1/(kursy_licz.size() - 1))*suma_temp;
+    	
+    	odchylenie = Math.sqrt(temp);
+    		
+    	return odchylenie;
     }
     
     public void showxml(){
