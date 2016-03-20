@@ -154,17 +154,19 @@ public class ParseAndCalc {
     	double odchylenie = 0; 
     	double suma_temp = 0;
     	double temp = 0;
+    	int mianownik =kursy_licz.size() - 1;
+    	
     	
     	for(int i = 0; i < kursy_licz.size(); i++)
     	{
-    		suma_temp += Math.pow((double)kursy_licz.get(i),srednia); 
+    		double roznica = (double)kursy_licz.get(i) - srednia;
+    		
+    		suma_temp += (double)(1.0/mianownik)*Math.pow(roznica,2); 
     		
     		
     	}
     	
-    	temp = (1/(kursy_licz.size() - 1))*suma_temp;
-    	
-    	odchylenie = Math.sqrt(temp);
+    	odchylenie = Math.sqrt(suma_temp);
     		
     	return odchylenie;
     }
@@ -250,13 +252,15 @@ public boolean chech_cond (int tmpy, int tmpm, int tmpd)
 	
 	
 	f=a&&c&&e;
+
+	if(tmpm == StartMonth)
+		
+		{b = tmpd >= StartDay; return f&&b;}
 	
-	if(tmpy == EndYear && tmpm == EndMonth)
+	else if(tmpy == EndYear && tmpm == EndMonth)
 		{d =  tmpd <= EndDay; return f&&d;}
 		
 		
-	else if(tmpm == StartMonth)
-		{b = tmpd >= StartDay; return f&&b;}
 	else{ return f;}
 }	
 }
