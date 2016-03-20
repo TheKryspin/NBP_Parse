@@ -179,12 +179,12 @@ public class ParseAndCalc {
     	double odchylenie = 0; 
     	double suma_temp = 0;
     	
-    	int mianownik =kursy_licz.size() - 1;
+    	int mianownik =kursy_sprzedazy_array.size() ;
     	
     	
-    	for(int i = 0; i < kursy_licz.size(); i++)
+    	for(int i = 0; i < kursy_sprzedazy_array.size(); i++)
     	{
-    		double roznica = (double)kursy_licz.get(i) - srednia;
+    		double roznica = (double)kursy_sprzedazy_array.get(i) - srednia;
     		
     		suma_temp += (double)(1.0/mianownik)*Math.pow(roznica,2); 
     		
